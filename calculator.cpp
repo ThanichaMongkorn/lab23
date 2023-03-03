@@ -1,10 +1,68 @@
 #include <windows.h>
 
 /* This is where all the input to the window goes to */
+LRESULT CALLBACK WndProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
+char szCladdName[]="TextEntry";
+char textSaved[20];
+HWND TextBox;
+
+
+HWND textfield,button;
+
 LRESULT CALLBACK WndProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam) {
 	switch(Message) {
 		
 		/* Upon destruction, tell the main thread to stop */
+		case WM_CREATE:
+		TextBox = CreateWindow("EDIT",
+								"",
+								WS_BORDER | WS_CHILD | WS_VISIBLE,
+								10,10,400,20,
+								hwnd, NULL ,NULL ,NULL);
+
+		CreateWindow("BUTTON",
+					"GO",
+					WS_VISIBLE | WS_CHILD | WS_BORDER,
+					420,10,70,20,
+					hwnd, (HMENU) 1, NULL,NULL);
+
+		/*textfield = CreateWindow("STATIC",
+								"Please input two number",
+								WS_VISIBLE | WS_CHILD | WS_BORDER,
+								20,20,300,25,
+								hwnd, NULL, NULL, NULL);
+		button = CreateWindow ("BUTTON",
+								"Close",
+								WS_VISIBLE | WS_CHILD | WS_BORDER,
+								20,50,100,20,
+								hwnd, (HMENU) 1, NULL, NULL);*/
+
+
+		break;
+
+
+		case WM_COMMAND:
+
+			switch (LOWORD(wParam)){
+
+				case 1:
+
+					int gwtstat=0;
+					//char *t = &textSaved[0];
+					gwtstat = GetWindowText(TextBox, &textSaved[0], 20);
+					if(gwtstat == 0){
+						//promt to enter text again
+					}
+
+					::MessageBox(hwnd, textSaved, textSaved, MB_OK);
+				/*case 1:
+					PostQuitMessage(0);
+				break;*/
+				break;
+			}
+
+			break;
+			
 		case WM_DESTROY: {
 			PostQuitMessage(0);
 			break;
@@ -41,7 +99,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		return 0;
 	}
 
-	hwnd = CreateWindowEx(WS_EX_CLIENTEDGE,"WindowClass","Caption",WS_VISIBLE|WS_OVERLAPPEDWINDOW,
+	hwnd = CreateWindowEx(WS_EX_CLIENTEDGE,"WindowClass","My Calculator",WS_VISIBLE|WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT, /* x */
 		CW_USEDEFAULT, /* y */
 		640, /* width */
@@ -64,3 +122,4 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	}
 	return msg.wParam;
 }
+	
