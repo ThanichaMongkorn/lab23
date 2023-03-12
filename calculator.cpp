@@ -1,12 +1,16 @@
 
 #include <windows.h>
+//#include <string>
+//#include <stdio.h>
 
 /* This is where all the input to the window goes to */
 LRESULT CALLBACK WndProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
 char szCladdName[]="TextEntry";
 char textSaved[20];
+
 HWND TextBox1;
 HWND TextBox2;
+HWND TextBoxAns;
 
 
 HWND textfield,button;
@@ -45,34 +49,52 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam) 
                     "-",
                     WS_VISIBLE | WS_CHILD | WS_BORDER,
                     80,110,30,30,
-                    hwnd, (HMENU) 1, NULL,NULL);
+                    hwnd, (HMENU) 2, NULL,NULL);
         CreateWindow("BUTTON",
                     "*",
                     WS_VISIBLE | WS_CHILD | WS_BORDER,
                     120,110,30,30,
-                    hwnd, (HMENU) 1, NULL,NULL);
+                    hwnd, (HMENU) 3, NULL,NULL);
         CreateWindow("BUTTON",
                     "/",
                     WS_VISIBLE | WS_CHILD | WS_BORDER,
                     160,110,30,30,
-                    hwnd, (HMENU) 1, NULL,NULL);
+                    hwnd, (HMENU) 4, NULL,NULL);
         break;
 
 
         case WM_COMMAND:
 
             switch (LOWORD(wParam)){
+                case 2:
+                    //TextBoxAns
+                    GetWindowText(TextBoxAns, &textSaved[0], 20);
+                    ::MessageBox(hwnd, textSaved, "Result", MB_OK);
+                break;
+
+                case 3:
+                    //TextBoxAns
+                    GetWindowText(TextBoxAns, &textSaved[0], 20);
+                    ::MessageBox(hwnd, textSaved, "Result", MB_OK);
+                break;
+
+                case 4:
+                    //TextBoxAns
+                    GetWindowText(TextBoxAns, &textSaved[0], 20);
+                    ::MessageBox(hwnd, textSaved, "Result", MB_OK);
+                break;
 
                 case 1:
+                    //TextBoxAns=TextBox1+TextBox2;
                     int gwtstat=0;
                     //char *t = &textSaved[0];
-                    gwtstat = GetWindowText(TextBox1, &textSaved[0], 20);
+                    gwtstat = GetWindowText(TextBoxAns, &textSaved[0], 20);
                     if(gwtstat == 0){
                         //promt to enter text again
                     }
-
-                    ::MessageBox(hwnd, textSaved, textSaved, MB_OK);
+                    ::MessageBox(hwnd, textSaved, "Result", MB_OK);
                 break;
+                
             }
             break;
         
