@@ -1,16 +1,18 @@
 
 #include <windows.h>
-//#include <string>
-//#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <stdio.h>
+
 
 /* This is where all the input to the window goes to */
 LRESULT CALLBACK WndProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam);
 char szCladdName[]="TextEntry";
-char textSaved[20];
-
+char textSaved1[20];
+char textSaved2[20];
 HWND TextBox1;
 HWND TextBox2;
-HWND TextBoxAns;
+//HWND TextBoxAns;
 
 
 HWND textfield,button;
@@ -64,36 +66,58 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT Message, WPARAM wParam, LPARAM lParam) 
 
 
         case WM_COMMAND:
+             if(LOWORD(wParam)!=0){
+                int num1=0;
+                int num2=0;
+                int sum;
+                float rs;
+
+                num1=GetWindowText(TextBox1,&textSaved1[0],20);
+                num2=GetWindowText(TextBox2,&textSaved2[0],20);
+            }
 
             switch (LOWORD(wParam)){
-                case 2:
-                    //TextBoxAns
-                    GetWindowText(TextBoxAns, &textSaved[0], 20);
-                    ::MessageBox(hwnd, textSaved, "Result", MB_OK);
-                break;
+                 if(LOWORD(wParam)!=0){
+                int num1=0;
+                int num2=0;
+                int sum;
+                float rs;
 
-                case 3:
-                    //TextBoxAns
-                    GetWindowText(TextBoxAns, &textSaved[0], 20);
-                    ::MessageBox(hwnd, textSaved, "Result", MB_OK);
-                break;
-
-                case 4:
-                    //TextBoxAns
-                    GetWindowText(TextBoxAns, &textSaved[0], 20);
-                    ::MessageBox(hwnd, textSaved, "Result", MB_OK);
-                break;
-
+                num1=GetWindowText(TextBox1,&textSaved1[0],20);
+                num2=GetWindowText(TextBox2,&textSaved2[0],20);
+            }
+                {
                 case 1:
-                    //TextBoxAns=TextBox1+TextBox2;
-                    int gwtstat=0;
-                    //char *t = &textSaved[0];
-                    gwtstat = GetWindowText(TextBoxAns, &textSaved[0], 20);
-                    if(gwtstat == 0){
-                        //promt to enter text again
-                    }
-                    ::MessageBox(hwnd, textSaved, "Result", MB_OK);
+                    float rs = atof(textSaved1)+atof(textSaved2);
+                    char t[100];
+                    sprintf(t,"%f",rs);
+                    ::MessageBox(hwnd,t,"Result",MB_OK);
                 break;
+                }
+                {
+                case 2:
+                    float rs = atof(textSaved1)-atof(textSaved2);
+                    char t[100];
+                    sprintf(t,"%f",rs);
+                    ::MessageBox(hwnd,t,"Result",MB_OK);
+                break;
+                }
+                {
+                case 3:
+                    float rs = atof(textSaved1)*atof(textSaved2);
+                    char t[100];
+                    sprintf(t,"%f",rs);
+                    ::MessageBox(hwnd,t,"Result",MB_OK);
+                break;
+                }
+                {
+                case 4:
+                    float rs = atof(textSaved1)/atof(textSaved2);
+                    char t[100];
+                    sprintf(t,"%f",rs);
+                    ::MessageBox(hwnd,t,"Result",MB_OK);
+                break;
+                }
                 
             }
             break;
@@ -125,7 +149,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     wc.hCursor   = LoadCursor(NULL, IDC_ARROW);
    
     /* White, COLOR_WINDOW is just a #define for a system color, try Ctrl+Clicking it */
-    wc.hbrBackground = (HBRUSH)(COLOR_WINDOW+10);
+    wc.hbrBackground = (HBRUSH)(COLOR_WINDOW+25);
     wc.lpszClassName = "WindowClass";
     wc.hIcon     = LoadIcon(NULL, IDI_APPLICATION); /* Load a standard icon */
     wc.hIconSm   = LoadIcon(NULL, IDI_APPLICATION); /* use the name "A" to use the project icon */
